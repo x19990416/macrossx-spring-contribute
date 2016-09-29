@@ -1,0 +1,50 @@
+apply plugin: "java"
+apply plugin: "maven"
+apply plugin:'maven-publish'
+
+group = "com.github.x19990416"
+version='1.0-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/groups/public"}
+    
+}
+
+
+sourceSets.all { set ->
+    def jarTask = task("${set.name}Jar", type: Jar) {
+        baseName = baseName + "-$set.name"
+        from set.output
+    }
+
+    artifacts {
+        archives jarTask
+    }
+}
+
+sourceSets {
+    wechat
+}
+
+dependencies {
+    compile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
+    compile 'org.apache.httpcomponents:httpclient:4.5.2'
+    compile 'com.google.code.gson:gson:2.6.2'
+    wechatCompile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
+    wechatCompile 'com.google.code.gson:gson:2.6.2'
+    wechatCompile 'org.apache.httpcomponents:httpclient:4.5.2'
+}
+
+jar {
+    from sourceSets.wechat.output
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.wechat.allSource
+}
+
+
+
