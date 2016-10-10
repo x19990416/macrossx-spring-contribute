@@ -26,6 +26,7 @@ sourceSets.all { set ->
 
 sourceSets {
     wechat
+    jdbc
 }
 
 dependencies {
@@ -35,15 +36,32 @@ dependencies {
     wechatCompile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
     wechatCompile 'com.google.code.gson:gson:2.6.2'
     wechatCompile 'org.apache.httpcomponents:httpclient:4.5.2'
+    jdbcCompile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
 }
 
 jar {
-    from sourceSets.wechat.output
+   // from sourceSets.wechat.output
+    from sourceSets.jdbc.output
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
-    from sourceSets.wechat.allSource
+    from sourceSets.jdbc.allSource
+}
+
+uploadArchives {
+    repositories {
+  	mavenDeployer {
+
+		/*    ["wechat"].each { type ->
+                addFilter(type) { artifact, file -> artifact.name.endsWith("-$type") }
+				}*/
+		    ["jdbc"].each { type ->
+                addFilter(type) { artifact, file -> artifact.name.endsWith("-$type") }
+				}
+			}
+			
+    }
 }
 
 
