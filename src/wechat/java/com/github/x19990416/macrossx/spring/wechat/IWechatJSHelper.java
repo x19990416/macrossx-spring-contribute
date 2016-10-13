@@ -15,6 +15,8 @@
  */
 package com.github.x19990416.macrossx.spring.wechat;
 
-public interface IWechatJSHelper {
+import java.io.InputStream;
 
+public interface IWechatJSHelper {
+	public InputStream getMediaFile(String mediaId);
 }
