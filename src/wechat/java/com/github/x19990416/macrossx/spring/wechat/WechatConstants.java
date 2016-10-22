@@ -24,5 +24,11 @@ public interface WechatConstants {
 	public static final String USER_GET_URL = "https://api.weixin.qq.com/cgi-bin/user/get?access_token={0}&next_openid={1}";
 	public static final String USER_INFO_URL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}";
 	public static final String FILE_MEDIA_GET="http://file.api.weixin.qq.com/cgi-bin/media/get?access_token={0}&media_id={1}";
+	
+	
+	public static final String OPEN_ACCESS_TOKEN_URL="https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code";
+	public static final String OPEN_ACCESS_TOKEN_REFRESH_URL="https://api.weixin.qq.com/sns/oauth2/refresh_token?appid={0}&grant_type=refresh_token&refresh_token={1}";
+	public static final String OPEN_ACCESS_TOKEN_CHECK_URL="https://api.weixin.qq.com/sns/auth?access_token={0}&openid={1}";
+
 
 }
