@@ -10,7 +10,7 @@ public interface IWechatOpenHelper {
 
 	public Optional<WechatOpenAccessToken> refreshAccessToken(String refreshToken);
 	/**
-	 * true 有效
+	 * true 有效 
 	 */
 	public boolean checkAccessToken(String token, String openid);
 	

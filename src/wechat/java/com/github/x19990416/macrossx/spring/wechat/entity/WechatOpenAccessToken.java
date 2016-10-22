@@ -11,5 +11,5 @@ public class WechatOpenAccessToken extends WechatAccessToken{
 	private String refresh_token;
 	private String openid;
 	private String scope;
-	private String unionid;
+	private String unionid; 
 }

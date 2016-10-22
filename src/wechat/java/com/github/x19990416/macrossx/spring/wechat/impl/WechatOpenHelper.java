@@ -33,7 +33,7 @@ import com.github.x19990416.macrossx.spring.wechat.server.http.WechatHttpClient;
 import lombok.extern.java.Log;
 
 @Log
-@Component
+@Component 
 public class WechatOpenHelper implements IWechatOpenHelper {
 	@Value("#{applicationProperties['macrossx.wechat.open.appid']}")
 	private String appid;
