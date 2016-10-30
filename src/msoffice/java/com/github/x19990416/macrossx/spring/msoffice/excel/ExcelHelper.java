@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * @author guolimin
  *
  */
-@Component
+@Component 
 public class ExcelHelper {
 	/**
 	 * office 97(-2007)
