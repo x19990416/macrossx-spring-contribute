@@ -7,6 +7,7 @@ version='1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
+maven{url "http://maven.aliyun.com/nexus/content/groups/public/"}
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/groups/public"}
     
@@ -27,38 +28,45 @@ sourceSets.all { set ->
 sourceSets {
     wechat
     jdbc
+    msoffice
 }
 
 dependencies {
     compile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
     compile 'org.apache.httpcomponents:httpclient:4.5.2'
     compile 'com.google.code.gson:gson:2.6.2'
+    compile group: 'org.apache.poi', name: 'poi', version: '3.15'
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
     wechatCompile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
     wechatCompile 'com.google.code.gson:gson:2.6.2'
     wechatCompile 'org.apache.httpcomponents:httpclient:4.5.2'
     jdbcCompile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
+    msofficeCompile group: 'org.apache.poi', name: 'poi', version: '3.15'
+    msofficeCompile group: 'commons-io', name: 'commons-io', version: '2.5'
+    
 }
 
 jar {
-   // from sourceSets.wechat.output
-    from sourceSets.jdbc.output
+    from sourceSets.wechat.output
+    //from sourceSets.jdbc.output
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
-    from sourceSets.jdbc.allSource
+    from sourceSets.wechat.allSource
+  // from sourceSets.jdbc.allSource
 }
 
 uploadArchives {
     repositories {
   	mavenDeployer {
 
-		/*    ["wechat"].each { type ->
-                addFilter(type) { artifact, file -> artifact.name.endsWith("-$type") }
-				}*/
-		    ["jdbc"].each { type ->
+		   ["wechat"].each { type ->
                 addFilter(type) { artifact, file -> artifact.name.endsWith("-$type") }
 				}
+		/*     ["jdbc"].each { type ->
+                addFilter(type) { artifact, file -> artifact.name.endsWith("-$type") }
+				}*/
 			}
 			
     }
