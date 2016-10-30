@@ -23,6 +23,7 @@ import java.util.Optional;
 import org.apache.http.client.methods.HttpGet;
 import org.springframework.stereotype.Component;
 
+import com.github.x19990416.macrossx.spring.wechat.IWechatOpenUserHelper;
 import com.github.x19990416.macrossx.spring.wechat.WechatConstants;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatOpenUserInfo;
 import com.github.x19990416.macrossx.spring.wechat.server.http.WechatHttpClient;
@@ -31,7 +32,7 @@ import lombok.extern.java.Log;
 
 @Log
 @Component
-public class WechatOpenUserHelper {
+public class WechatOpenUserHelper implements IWechatOpenUserHelper{
 	public Optional<WechatOpenUserInfo> userInfo(String accessToken,String openid) {
 		try {
 				HttpGet httpGet = new HttpGet();
