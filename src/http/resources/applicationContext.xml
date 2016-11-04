@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+						 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd"
+	default-lazy-init="false">
+	 <bean id="crossDomain" class="com.laomaoffice.aop.CrossDomain"/>               
+	<!-- aop -->
+	<!-- <bean id="httpRequestSignValidity" class="com.carway.appserver.aop.HttpRequestSignValidity" />
+	<bean id="httpRequestTokenValidity" class="com.carway.appserver.aop.HttpRequestTokenValidity" />-->
+<!-- 	<aop:config>
+		<aop:aspect id="sign" ref="sessionCheck" order="1">
+			<aop:pointcut id="target-sign"
+				expression="execution(* com.laomaoffice.controller.*.*(..)) &amp;&amp; !execution(@com.laomaoffice.aop.NoAop * * (..))" />
+			<aop:around method="arround" pointcut-ref="target-sign" />
+		</aop:aspect>
+		<aop:aspect id="token" ref="crossDomain"
+			order="0">
+			<aop:pointcut id="target-token"
+				expression="execution(* com.laomaoffice.controller.*.*(..))" />
+			<aop:around method="arround" pointcut-ref="target-token" />
+		</aop:aspect>
+	</aop:config>  -->
+	<context:annotation-config />
+
+</beans>

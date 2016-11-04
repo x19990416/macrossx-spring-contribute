@@ -27,42 +27,41 @@ sourceSets.all { set ->
 sourceSets {
     wechat
     jdbc
+    http
 }
 
 dependencies {
     compile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
     compile 'org.apache.httpcomponents:httpclient:4.5.2'
     compile 'com.google.code.gson:gson:2.6.2'
+    compile group: 'org.springframework', name: 'spring-aop', version: '4.3.0.RELEASE'
+	compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.9'
+	// https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+	compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.0-b01'
+	
     wechatCompile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
     wechatCompile 'com.google.code.gson:gson:2.6.2'
     wechatCompile 'org.apache.httpcomponents:httpclient:4.5.2'
     jdbcCompile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
+    httpCompile group: 'org.springframework', name: 'spring-aop', version: '4.3.0.RELEASE'
+	httpCompile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.9'
+	// https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+	httpCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.0-b01'
+	
 }
 
 jar {
-   // from sourceSets.wechat.output
-    from sourceSets.jdbc.output
+    from sourceSets.wechat.output
+  //  from sourceSets.jdbc.output
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
-    from sourceSets.jdbc.allSource
+    //from sourceSets.jdbc.allSource
+    from sourceSets.wechat.allSource
 }
 
-uploadArchives {
-    repositories {
-  	mavenDeployer {
 
-		/*    ["wechat"].each { type ->
-                addFilter(type) { artifact, file -> artifact.name.endsWith("-$type") }
-				}*/
-		    ["jdbc"].each { type ->
-                addFilter(type) { artifact, file -> artifact.name.endsWith("-$type") }
-				}
-			}
-			
-    }
-}
 
 
 
