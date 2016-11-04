@@ -22,7 +22,7 @@
 				expression="execution(* com.laomaoffice.controller.*.*(..))" />
 			<aop:around method="arround" pointcut-ref="target-token" />
 		</aop:aspect>
-	</aop:config>  -->
+	</aop:config>  --> 
 	<context:annotation-config />
 
 </beans>
