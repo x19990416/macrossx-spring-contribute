@@ -7,6 +7,7 @@ version='1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
+maven{url "http://maven.aliyun.com/nexus/content/groups/public/"}
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/groups/public"}
     
@@ -27,6 +28,7 @@ sourceSets.all { set ->
 sourceSets {
     wechat
     jdbc
+    msoffice
     http
 }
 
@@ -34,34 +36,48 @@ dependencies {
     compile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
     compile 'org.apache.httpcomponents:httpclient:4.5.2'
     compile 'com.google.code.gson:gson:2.6.2'
+    compile group: 'org.apache.poi', name: 'poi', version: '3.15'
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
     compile group: 'org.springframework', name: 'spring-aop', version: '4.3.0.RELEASE'
 	compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.9'
-	// https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
-	compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.0-b01'
-	
     wechatCompile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
     wechatCompile 'com.google.code.gson:gson:2.6.2'
     wechatCompile 'org.apache.httpcomponents:httpclient:4.5.2'
     jdbcCompile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
+    msofficeCompile group: 'org.apache.poi', name: 'poi', version: '3.15'
+    msofficeCompile group: 'commons-io', name: 'commons-io', version: '2.5'
     httpCompile group: 'org.springframework', name: 'spring-aop', version: '4.3.0.RELEASE'
 	httpCompile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.9'
-	// https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
-	httpCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.0-b01'
-	
-}
+} 
 
 jar {
     from sourceSets.wechat.output
-  //  from sourceSets.jdbc.output
+    //from sourceSets.jdbc.output
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
-    //from sourceSets.jdbc.allSource
     from sourceSets.wechat.allSource
+  // from sourceSets.jdbc.allSource
 }
 
 
 
+
+uploadArchives {
+    repositories {
+  	mavenDeployer {
+			repository(url: 'https://oss.sonatype.org/content/repositories/snapshots'){
+			authentication(userName: 'x19990416', password: 'Forever')}
+		/*    ["wechat"].each { type ->
+                addFilter(type) { artifact, file -> artifact.name.endsWith("-$type") }
+				}*/
+		    ["http"].each { type ->
+                addFilter(type) { artifact, file -> artifact.name.endsWith("-$type") }
+				}
+			}
+			
+    }
+}
 
 
