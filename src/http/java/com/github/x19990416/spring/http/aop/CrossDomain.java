@@ -26,5 +26,5 @@ public class CrossDomain {
 			response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
 		}
 		return pjp.proceed();
-	}
+	} 
 }
