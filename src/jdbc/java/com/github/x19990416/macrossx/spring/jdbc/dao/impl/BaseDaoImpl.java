@@ -134,7 +134,7 @@ public class BaseDaoImpl implements BaseDao {
 			sql.append(" set "+key+"=?,");
 		}
 		sql= new StringBuilder(sql.subSequence(0, sql.length()-1));
-		sql.append(" where id=?");
+		sql.append(" where "+keyName+"=?");
 		int i =0;
 		for(Object o:params.values()){
 			objects[i++]=o;
