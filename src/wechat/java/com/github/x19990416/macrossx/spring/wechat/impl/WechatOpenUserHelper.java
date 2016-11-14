@@ -36,8 +36,8 @@ public class WechatOpenUserHelper implements IWechatOpenUserHelper{
 	public Optional<WechatOpenUserInfo> userInfo(String accessToken,String openid) {
 		try {
 				HttpGet httpGet = new HttpGet();
-				httpGet.setURI(new URI(MessageFormat.format(WechatConstants.OPEN_USER_INFO_URL, accessToken,
-						openid)));
+				httpGet.setURI(new URI(MessageFormat.format(WechatConstants.OPEN_USER_INFO_URL, openid,
+						accessToken	)));
 				return new WechatHttpClient().send(httpGet, WechatOpenUserInfo.class);
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block

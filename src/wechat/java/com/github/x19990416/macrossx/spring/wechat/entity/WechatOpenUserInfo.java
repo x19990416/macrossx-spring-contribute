@@ -27,7 +27,7 @@ public class WechatOpenUserInfo {
 	private String city;
 	private String province;
 	private String country;
-	private String headimurl;
+	private String headimgurl;
 	private String unionid;
 	private List<String> privilege;	
 }
