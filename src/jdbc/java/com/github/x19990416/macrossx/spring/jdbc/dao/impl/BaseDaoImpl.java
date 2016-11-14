@@ -130,8 +130,9 @@ public class BaseDaoImpl implements BaseDao {
 		Object[] objects = new Object[params.values().size()];
 		StringBuilder  sql = new StringBuilder("update "+tableName);
 		Object id = params.remove(keyName);
+		sql.append(" set ");
 		for(String key : params.keySet()){
-			sql.append(" set "+key+"=?,");
+			sql.append(key+"=?,");
 		}
 		sql= new StringBuilder(sql.subSequence(0, sql.length()-1));
 		sql.append(" where "+keyName+"=?");
