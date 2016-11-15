@@ -44,20 +44,24 @@ dependencies {
     wechatCompile 'com.google.code.gson:gson:2.6.2'
     wechatCompile 'org.apache.httpcomponents:httpclient:4.5.2'
     jdbcCompile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
+    jdbcCompile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
     msofficeCompile group: 'org.apache.poi', name: 'poi', version: '3.15'
     msofficeCompile group: 'commons-io', name: 'commons-io', version: '2.5'
+   	msofficeCompile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
     httpCompile group: 'org.springframework', name: 'spring-aop', version: '4.3.0.RELEASE'
 	httpCompile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.9'
+	httpCompile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
+	
 } 
 
 jar {
-    from sourceSets.wechat.output
+    from sourceSets.jdbc.output
     //from sourceSets.jdbc.output
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
-    from sourceSets.wechat.allSource
+    from sourceSets.jdbc.allSource
   // from sourceSets.jdbc.allSource
 }
 
@@ -67,15 +71,7 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 uploadArchives {
     repositories {
   	mavenDeployer {
-			repository(url: 'https://oss.sonatype.org/content/repositories/snapshots'){
-			authentication(userName: 'x19990416', password: 'Forever')}
-		/*    ["wechat"].each { type ->
-                addFilter(type) { artifact, file -> artifact.name.endsWith("-$type") }
-				}*/
-		    ["http"].each { type ->
-                addFilter(type) { artifact, file -> artifact.name.endsWith("-$type") }
-				}
-			}
+		
 			
     }
 }
