@@ -11,35 +11,29 @@
 	http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.1.xsd">
 
 	<!-- 数据库读操作数据源 start 数据源配置 -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
 		destroy-method="close">
 		<!--设置JDBC驱动名称 -->
-		<property name="driverClassName" value="${macrossx.driverClassName}" />
+		<property name="driverClassName" value="${smarthome.driverClassName}" />
 		<!--设置JDBC连接URL-->
-		<property name="url" value="${macrossx.url}" />
+		<property name="url" value="${smarthome.url}" />
 		<!--设置数据库用户名-->
-		<property name="username" value="${macrossx.username}" />
+		<property name="username" value="${smarthome.username}" />
 		<!--设置数据库密码-->
-		<property name="password" value="${macrossx.password}" />
+		<property name="password" value="${smarthome.password}" />
 		<!--设置连接池初始值-->
-		<property name="initialSize" value="${macrossx.initialSize}" />
-		<!--设置连接池最大值-->
-		<property name="maxActive" value="${macrossx.maxActive}" />
+		<property name="initialSize" value="${smarthome.initialSize}" />
+
 		<!--设置连接池最小空闲值-->
-		<property name="minIdle" value="${macrossx.minIdle}" />
+		<property name="minIdle" value="${smarthome.minIdle}" />
 		<!--设置连接池最大空闲值-->
-		<property name="maxIdle" value="${macrossx.maxIdle}" />
-		<!--removeAbandoned: 是否自动回收超时连接-->    
-		<property name="removeAbandoned" value="true"/> 
-		<!--removeAbandonedTimeout: 超时时间(以秒数为单位)-->    
-		<property name="removeAbandonedTimeout" value="300"/>   
-		<!--maxWait: 超时等待时间以毫秒为单位 6000毫秒-->    
-		<property name="maxWait" value="5000"/>
-		<property name="testOnBorrow" value="false" />
+		<property name="maxIdle" value="${smarthome.maxIdle}" />
+			<property name="testOnBorrow" value="false" />
 	    <property name="testOnReturn" value="false" />
 	    <property name="testWhileIdle" value="true" />
 		<property name="validationQuery" value="select 1"/>     
 	</bean>
+	
 	
 	
 
