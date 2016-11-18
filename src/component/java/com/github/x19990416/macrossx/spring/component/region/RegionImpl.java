@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 import com.github.x19990416.macrossx.spring.jdbc.dao.impl.BaseDaoImpl;
 
 @Component
-public class RegionDaoImpl extends BaseDaoImpl implements IRegion {
+public class RegionImpl extends BaseDaoImpl implements IRegion {
 
 	public List<Region> province() {
 		return this.list(1l);
