@@ -17,9 +17,20 @@ package com.github.x19990416.macrossx.spring.component.region;
 
 import java.util.List;
 
+/**
+ * 中国行政区域列表
+ * @author starseeker.limin@gmail.com(X-Forever)
+ *
+ */
 public interface IRegion {
+	/**
+	 * 获取省、直辖市、自治区
+	 */
 	public List<Region> province();
 	
+	/**
+	 * 获取下一级行政区域
+	 */
 	public List<Region> next(Long pid);
 
 }
