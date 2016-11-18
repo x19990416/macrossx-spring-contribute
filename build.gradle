@@ -7,9 +7,15 @@ version='1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
-maven{url "http://maven.aliyun.com/nexus/content/groups/public/"}
     mavenCentral()
-    maven { url "https://oss.sonatype.org/content/groups/public"}
+maven{url "http://maven.aliyun.com/nexus/content/groups/public/"}
+maven{url "https://clojars.org/repo/"}
+	mavenCentral()
+	mavenLocal()
+	//maven { url"http://180.166.28.123:8081/nexus/content/repositories/snapshots"}
+//	maven { url"http://180.166.28.123:8081/nexus/content/repositories/thirdparty/"}
+	maven{url "https://oss.sonatype.org/content/repositories/snapshots"}
+	maven {url "https://repository.sonatype.org/content/groups/public/"}
     
 }
 
@@ -30,10 +36,14 @@ sourceSets {
     jdbc
     msoffice
     http
+    component
 }
 
 dependencies {
+compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.3'
+	compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
     compile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
+    compile  group: 'com.github.x19990416', name: 'macrossx-spring-contribute-jdbc', version: '1.0-SNAPSHOT'
     compile 'org.apache.httpcomponents:httpclient:4.5.2'
     compile 'com.google.code.gson:gson:2.6.2'
     compile group: 'org.apache.poi', name: 'poi', version: '3.15'
@@ -51,29 +61,25 @@ dependencies {
     httpCompile group: 'org.springframework', name: 'spring-aop', version: '4.3.0.RELEASE'
 	httpCompile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.9'
 	httpCompile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
-	
+    componentCompile group: 'com.github.x19990416', name: 'macrossx-common-spring', version: '1.0-SNAPSHOT'
+	componentCompile group: 'com.github.x19990416', name: 'macrossx-spring-contribute-jdbc', version: '1.0-SNAPSHOT'
+	    
+	 
 } 
 
 jar {
-    from sourceSets.jdbc.output
+    from sourceSets.component.output
     //from sourceSets.jdbc.output
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
-    from sourceSets.jdbc.allSource
+    from sourceSets.component.allSource
   // from sourceSets.jdbc.allSource
 }
+[compileJava, compileTestJava,compileComponentJava]*.options*.encoding = 'UTF-8'
 
 
 
-
-uploadArchives {
-    repositories {
-  	mavenDeployer {
-		
-			
-    }
-}
 
 
