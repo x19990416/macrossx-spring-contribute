@@ -6,7 +6,7 @@
 						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
 						 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd"
 	default-lazy-init="false">
-	 <bean id="crossDomain" class="com.laomaoffice.aop.CrossDomain"/>               
+	 <bean id="crossDomain" class="com.github.x19990416.spring.http.aop.CrossDomain"/>               
 	<!-- aop -->
 	<!-- <bean id="httpRequestSignValidity" class="com.carway.appserver.aop.HttpRequestSignValidity" />
 	<bean id="httpRequestTokenValidity" class="com.carway.appserver.aop.HttpRequestTokenValidity" />-->
