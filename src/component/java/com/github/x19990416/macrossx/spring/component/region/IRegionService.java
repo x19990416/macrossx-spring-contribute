@@ -17,27 +17,20 @@ package com.github.x19990416.macrossx.spring.component.region;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+/**
+ * 中国行政区域列表
+ * @author starseeker.limin@gmail.com(X-Forever)
+ *
+ */
+public interface IRegionService {
+	/**
+	 * 获取省、直辖市、自治区
+	 */
+	public List<Region> province();
+	
+	/**
+	 * 获取下一级行政区域
+	 */
+	public List<Region> next(Long pid);
 
-import com.github.x19990416.macrossx.spring.jdbc.dao.impl.BaseDaoImpl;
-
-@Component
-public class RegionImpl extends BaseDaoImpl implements IRegion {
-
-	public List<Region> province() {
-		return this.list(1l);
-	}
-
-	private List<Region> list(Long parentId) {
-		return super.listObj("select * from region where parent_id=? and region_status=1", Region.class, parentId);
-	}
-
-	@Override
-	public List<Region> next(Long pid) {
-		List<Region> lRegion = list(pid);
-		lRegion.removeIf((e) -> {
-			return "市辖区".equals(e.getRegionName());
-		});
-		return lRegion;
-	}
 }
