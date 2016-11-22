@@ -23,7 +23,7 @@ import lombok.Data;
 public abstract class BaseEntity {
 	private Long createUser;
 	private Date createTime;
-	private String updateUser;
-	private Long updateTime;
+	private Long updateUser;
+	private Date updateTime;
 	
 }
