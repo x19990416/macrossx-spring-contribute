@@ -21,9 +21,9 @@ import lombok.Data;
 
 @Data
 public abstract class BaseEntity {
-	private String createUser;
+	private Long createUser;
 	private Date createTime;
 	private String updateUser;
-	private Date updateTime;
+	private Long updateTime;
 	
 }
