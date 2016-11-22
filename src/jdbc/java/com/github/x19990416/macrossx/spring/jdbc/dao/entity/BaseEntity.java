@@ -25,5 +25,5 @@ public abstract class BaseEntity {
 	private Date createTime;
 	private Long updateUser;
 	private Date updateTime;
-	
+	 
 }
