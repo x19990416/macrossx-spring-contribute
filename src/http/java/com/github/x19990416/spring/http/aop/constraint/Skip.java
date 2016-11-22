@@ -1,4 +1,4 @@
-package com.github.x19990416.spring.http.constraint;
+package com.github.x19990416.spring.http.aop.constraint;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

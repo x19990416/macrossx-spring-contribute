@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.x19990416.spring.http.constraint;
+package com.github.x19990416.spring.http.aop.constraint;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

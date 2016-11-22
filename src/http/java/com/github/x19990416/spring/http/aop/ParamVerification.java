@@ -23,7 +23,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.github.x19990416.spring.http.constraint.ParamCheck;
+import com.github.x19990416.spring.http.aop.constraint.ParamCheck;
 import com.macrossx.springframework.Constants;
 import com.macrossx.springframework.common.MapResponse;
 
