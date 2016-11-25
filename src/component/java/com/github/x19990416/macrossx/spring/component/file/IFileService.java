@@ -15,6 +15,7 @@
  */
 package com.github.x19990416.macrossx.spring.component.file;
 
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Optional;
 
@@ -23,4 +24,5 @@ public interface IFileService {
 	public int remove(Long id) ;
 	public Optional<File> listById(Long id); 
 	public void read(final OutputStream os, Long id);
+	public Long save(File file,InputStream in);
 }

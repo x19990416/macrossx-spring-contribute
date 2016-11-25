@@ -15,6 +15,7 @@
  */
 package com.github.x19990416.macrossx.spring.component.file;
 
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +38,13 @@ public class FileServiceImpl extends BaseDaoImpl implements IFileService{
 		return super.insertAndGetKey(
 				"insert into file(refid,name,type,file,create_user,update_user,create_time,update_time)values(?,?,?,?,?,?,SYSDATE,SYSDATE())",
 				file.getRefid(), file.getName(), file.getType(), file.getFile(), file.getCreateUser(),
+				file.getUpdateUser());
+	}
+	
+	public Long save(File file,InputStream in) {
+		return super.insertAndGetKey(
+				"insert into file(refid,name,type,file,create_user,update_user,create_time,update_time)values(?,?,?,?,?,?,SYSDATE,SYSDATE())",
+				file.getRefid(), file.getName(), file.getType(), in, file.getCreateUser(),
 				file.getUpdateUser());
 	}
 
