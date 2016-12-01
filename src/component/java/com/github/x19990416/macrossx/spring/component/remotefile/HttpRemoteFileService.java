@@ -56,6 +56,11 @@ public class HttpRemoteFileService implements IRemoteFileService {
 	}
 
 	@Override
+	public byte[] load(String subUrl, String name) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public boolean remove(String subUrl, String name) {
 		HttpRequestBase request = createRemoveReq(subUrl, name);
 		int statusCode = -1;

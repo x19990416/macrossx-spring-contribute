@@ -1,6 +1,5 @@
 package com.github.x19990416.macrossx.spring.component.remotefile;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +18,12 @@ public interface IRemoteFileService {
 	}
 
 	boolean save(InputStream in, String subUrl, String name);
+
+	default byte[] load(String name) {
+		return load(null, name);
+	}
+
+	byte[] load(String subUrl, String name);
 
 	default boolean remove(String name) {
 		return remove(null, name);

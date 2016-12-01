@@ -36,7 +36,7 @@ public class FtpRemoteFileService implements IRemoteFileService {
 			return false;
 
 		boolean result = false;
-		
+
 		try {
 			result = ftpClient.storeFile(name, in);
 		} catch (IOException e) {
@@ -53,13 +53,18 @@ public class FtpRemoteFileService implements IRemoteFileService {
 	}
 
 	@Override
+	public byte[] load(String subUrl, String name) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public boolean remove(String subUrl, String name) {
 		FTPClient ftpClient = createReq(subUrl);
 		if (ftpClient == null)
 			return false;
-		
+
 		boolean result = false;
-		
+
 		try {
 			result = ftpClient.deleteFile(name);
 		} catch (IOException e) {
@@ -80,9 +85,9 @@ public class FtpRemoteFileService implements IRemoteFileService {
 		FTPClient ftpClient = createReq(subUrl);
 		if (ftpClient == null)
 			return null;
-		
+
 		List<String> resultList = null;
-		
+
 		try {
 			FTPFile[] fileList = ftpClient.listFiles();
 			resultList = new ArrayList<String>(fileList.length);
@@ -97,7 +102,7 @@ public class FtpRemoteFileService implements IRemoteFileService {
 				} catch (IOException e) {
 				}
 		}
-		
+
 		return resultList;
 	}
 
