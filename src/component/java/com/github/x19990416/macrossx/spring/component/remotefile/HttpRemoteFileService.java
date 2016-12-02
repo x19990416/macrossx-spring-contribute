@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
@@ -14,26 +16,28 @@ import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.springframework.beans.factory.annotation.Value;
 
 public class HttpRemoteFileService implements IRemoteFileService {
+	@Value("#{applicationProperties['macrossx.component.remotfile.http.baseurl']}")
 	private String baseUrl;
+	@Value("#{applicationProperties['macrossx.component.remotfile.http.maxpool']}")
+	private Integer maxPool;
+	@Value("#{applicationProperties['macrossx.component.remotfile.http.timeout']}")
+	private Integer timeout;
+
 	private HttpClient httpClient;
-
-	public HttpRemoteFileService(String baseUrl, int maxPool, int timeOutMs) {
-		this.baseUrl = baseUrl;
-
+	
+	@PostConstruct	
+	public void init() {
 		PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
 		cm.setMaxTotal(maxPool);
 		cm.setDefaultMaxPerRoute(maxPool);
-
-		RequestConfig requestConfig = RequestConfig.custom()
-				.setConnectionRequestTimeout(timeOutMs)
-				.setConnectTimeout(timeOutMs).setSocketTimeout(timeOutMs)
-				.build();
-
+		RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(timeout)
+				.setConnectTimeout(timeout).setSocketTimeout(timeout).build();
 		httpClient = HttpClients.custom().setConnectionManager(cm)
-				.setRetryHandler(new DefaultHttpRequestRetryHandler(0, false))
-				.setDefaultRequestConfig(requestConfig).build();
+				.setRetryHandler(new DefaultHttpRequestRetryHandler(0, false)).setDefaultRequestConfig(requestConfig)
+				.build();
 	}
 
 	@Override
@@ -84,8 +88,7 @@ public class HttpRemoteFileService implements IRemoteFileService {
 		throw new UnsupportedOperationException();
 	}
 
-	protected HttpRequestBase createCreateReq(InputStream in, String subUrl,
-			String name) {
+	protected HttpRequestBase createCreateReq(InputStream in, String subUrl, String name) {
 		String fullUrl = combineUrl(combineUrl(baseUrl, subUrl), name);
 		HttpPut request = new HttpPut(fullUrl);
 		request.setEntity(new InputStreamEntity(in));
