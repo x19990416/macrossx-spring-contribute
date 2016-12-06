@@ -95,11 +95,15 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_PUT(self):
         """Serve a PUT request."""
         path = self.translate_path(self.path)
-        print("Serving path '%s'" % path)
-        f = open(path, 'wb')
-        f.write(self.rfile.read(int(self.headers.getheader('Content-Length'))))
-        f.flush()
-        f.close()
+        print("PUT path '%s'" % path)
+        try:
+            f = open(path, 'wb')
+            f.write(self.rfile.read(int(self.headers.getheader('Content-Length'))))
+            f.flush()
+            f.close()
+        except IOError:
+            self.send_error(404, "File not found")
+            return
         # Begin the response
         self.send_response(200)
         self.end_headers()
