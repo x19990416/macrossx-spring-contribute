@@ -10,12 +10,14 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
 
 public class HttpRemoteFileService implements IRemoteFileService {
@@ -42,7 +44,7 @@ public class HttpRemoteFileService implements IRemoteFileService {
 
 	@Override
 	public boolean save(InputStream in, String subUrl, String name) {
-		HttpRequestBase request = createCreateReq(in, subUrl, name);
+		HttpRequestBase request = createPutReq(in, subUrl, name);
 		int statusCode = -1;
 
 		try {
@@ -61,7 +63,23 @@ public class HttpRemoteFileService implements IRemoteFileService {
 
 	@Override
 	public byte[] load(String subUrl, String name) {
-		throw new UnsupportedOperationException();
+		HttpRequestBase request = createGetReq(subUrl, name);
+		byte[] fileData = null;
+		
+		try {
+			HttpResponse httpResponse = httpClient.execute(request);
+			if (isSuccess(httpResponse.getStatusLine().getStatusCode())) {
+				fileData = EntityUtils.toByteArray(httpResponse.getEntity());
+			}
+		} catch (IOException e) {
+			request.abort();
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+		}
+		
+		return fileData;
 	}
 
 	@Override
@@ -88,10 +106,17 @@ public class HttpRemoteFileService implements IRemoteFileService {
 		throw new UnsupportedOperationException();
 	}
 
-	protected HttpRequestBase createCreateReq(InputStream in, String subUrl, String name) {
+	protected HttpRequestBase createPutReq(InputStream in, String subUrl, String name) {
 		String fullUrl = combineUrl(combineUrl(baseUrl, subUrl), name);
 		HttpPut request = new HttpPut(fullUrl);
 		request.setEntity(new InputStreamEntity(in));
+
+		return request;
+	}
+	
+	protected HttpRequestBase createGetReq(String subUrl, String name) {
+		String fullUrl = combineUrl(combineUrl(baseUrl, subUrl), name);
+		HttpGet request = new HttpGet(fullUrl);
 
 		return request;
 	}

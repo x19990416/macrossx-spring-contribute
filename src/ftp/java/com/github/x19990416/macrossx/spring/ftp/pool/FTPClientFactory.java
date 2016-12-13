@@ -32,6 +32,7 @@ public class FTPClientFactory extends BasePooledObjectFactory<FTPClient> {
 		boolean error = true;
 
 		try {
+			ftpClient.setAutodetectUTF8(true);
 			ftpClient.connect(host, port);
 			int reply = ftpClient.getReplyCode();
 			if (FTPReply.isPositiveCompletion(reply)) {

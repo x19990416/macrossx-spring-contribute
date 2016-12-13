@@ -1,5 +1,6 @@
 package com.github.x19990416.macrossx.spring.component.remotefile;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -50,7 +51,25 @@ public class FtpRemoteFileService implements IRemoteFileService {
 
 	@Override
 	public byte[] load(String subUrl, String name) {
-		throw new UnsupportedOperationException();
+		FTPClient ftpClient = createReq(subUrl);
+		if (ftpClient == null)
+			return null;
+		
+		byte[] fileData = null;
+		boolean removeReq = false;
+		
+		try {
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			if (ftpClient.retrieveFile(name, outputStream))
+				fileData = outputStream.toByteArray();
+		} catch (IOException e) {
+			removeReq = true;
+			e.printStackTrace();
+		} finally {
+			releaseReq(ftpClient, removeReq);
+		}
+		
+		return fileData;
 	}
 
 	@Override
