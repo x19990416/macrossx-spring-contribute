@@ -2,19 +2,13 @@ package com.github.x19990416.macrossx.spring.component.remotefile;
 
 import java.io.InputStream;
 import java.util.List;
-import java.util.UUID;
-
 import org.apache.commons.lang3.StringUtils;
 
 public interface IRemoteFileService {
 	final static String URL_SEPARATOR = "/";
 
-	default boolean save(InputStream in) {
-		return save(in, null);
-	}
-
-	default boolean save(InputStream in, String subUrl) {
-		return save(in, subUrl, UUID.randomUUID().toString());
+	default boolean save(InputStream in, String name) {
+		return save(in, null, name);
 	}
 
 	boolean save(InputStream in, String subUrl, String name);
