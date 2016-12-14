@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
@@ -29,8 +30,8 @@ public class HttpRemoteFileService implements IRemoteFileService {
 	private Integer timeout;
 
 	private HttpClient httpClient;
-	
-	@PostConstruct	
+
+	@PostConstruct
 	public void init() {
 		PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
 		cm.setMaxTotal(maxPool);
@@ -65,7 +66,7 @@ public class HttpRemoteFileService implements IRemoteFileService {
 	public byte[] load(String subUrl, String name) {
 		HttpRequestBase request = createGetReq(subUrl, name);
 		byte[] fileData = null;
-		
+
 		try {
 			HttpResponse httpResponse = httpClient.execute(request);
 			if (isSuccess(httpResponse.getStatusLine().getStatusCode())) {
@@ -78,7 +79,7 @@ public class HttpRemoteFileService implements IRemoteFileService {
 			e.printStackTrace();
 		} finally {
 		}
-		
+
 		return fileData;
 	}
 
@@ -113,7 +114,7 @@ public class HttpRemoteFileService implements IRemoteFileService {
 
 		return request;
 	}
-	
+
 	protected HttpRequestBase createGetReq(String subUrl, String name) {
 		String fullUrl = combineUrl(combineUrl(baseUrl, subUrl), name);
 		HttpGet request = new HttpGet(fullUrl);
@@ -130,5 +131,16 @@ public class HttpRemoteFileService implements IRemoteFileService {
 
 	private static boolean isSuccess(int code) {
 		return ((200 <= code) && (code <= 299));
+	}
+
+	public String combineUrl(String baseUrl, String subUrl) {
+		baseUrl = this.baseUrl;
+		if (StringUtils.isEmpty(subUrl))
+			return baseUrl;
+
+		if (baseUrl.endsWith(URL_SEPARATOR))
+			return baseUrl + subUrl;
+		else
+			return baseUrl + URL_SEPARATOR + subUrl;
 	}
 }
