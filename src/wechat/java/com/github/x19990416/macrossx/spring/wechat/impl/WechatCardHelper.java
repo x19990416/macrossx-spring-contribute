@@ -18,6 +18,8 @@ import com.github.x19990416.macrossx.spring.wechat.WechatConstants;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatAccessToken;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardActivation;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardCreation;
+import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardUpdateReqObj;
+import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardUpdateRespObj;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatLogo;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatResponseObj;
 import com.github.x19990416.macrossx.spring.wechat.server.http.WechatHttpClient;
@@ -73,7 +75,20 @@ public class WechatCardHelper implements IWechatCardHelper {
 			log.error("{0}", e);
 			return Optional.empty();
 		}
-
+	}
+	
+	public Optional<WechatCardUpdateRespObj> update(WechatCardUpdateReqObj update) {
+		WechatAccessToken accessToken = wechatHelper.getAccessToken().get();
+		HttpPost httpPost = new HttpPost();
+		try {
+			httpPost.setURI(new URI(MessageFormat.format(WechatConstants.UPLOAD_LOGO, accessToken.getAccess_token())));
+			httpPost.setEntity(new StringEntity(new Gson().toJson(update), "utf-8"));
+			return new WechatHttpClient().send(httpPost, WechatCardUpdateRespObj.class);
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			log.error("{0}", e);
+			return Optional.empty();
+		}
 	}
 
 }
