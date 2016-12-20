@@ -17,10 +17,10 @@ package com.github.x19990416.macrossx.spring.wechat;
 
 import java.util.Optional;
 
-import com.github.x19990416.macrossx.spring.wechat.entity.WecahtMessageTemplateRespObj;
+import com.github.x19990416.macrossx.spring.wechat.entity.WechatMessageTemplateRespObj;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatMessageTemplate;
 
 public interface IWechatMessageHelper {
-	public Optional<WecahtMessageTemplateRespObj> sendTemplate(WechatMessageTemplate template);
+	public Optional<WechatMessageTemplateRespObj> sendTemplate(WechatMessageTemplate template);
 
 }

@@ -22,6 +22,6 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper=false)
 @ToString(callSuper=true)
-public  class WecahtMessageTemplateRespObj extends WechatResponseObj{
+public  class WechatMessageTemplateRespObj extends WechatResponseObj{
 	private int msgid;
 }

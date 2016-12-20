@@ -26,7 +26,9 @@ public interface WechatConstants {
 	public static final String FILE_MEDIA_GET="http://file.api.weixin.qq.com/cgi-bin/media/get?access_token={0}&media_id={1}";
 	public static final String UPLOAD_LOGO = "https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token={0}";
 	public static final String CARD_CREATE="https://api.weixin.qq.com/card/create?access_token={0}";
-
+	public static final String CARD_ACTIVATE="https://api.weixin.qq.com/card/generalcard/activate?access_token={0}";
+	public static final String CARD_UPDATE_USER="https://api.weixin.qq.com/card/generalcard/updateuser?access_token={0}";
+	public static final String STORE_POI_LIST="https://api.weixin.qq.com/cgi-bin/poi/getpoilist?access_token={0}";
 	
 	
 	public static final String OPEN_ACCESS_TOKEN_URL="https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code";

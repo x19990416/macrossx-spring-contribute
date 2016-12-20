@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
 import com.github.x19990416.macrossx.spring.wechat.IWechatHelper;
 import com.github.x19990416.macrossx.spring.wechat.IWechatMessageHelper;
 import com.github.x19990416.macrossx.spring.wechat.WechatConstants;
-import com.github.x19990416.macrossx.spring.wechat.entity.WecahtMessageTemplateRespObj;
+import com.github.x19990416.macrossx.spring.wechat.entity.WechatMessageTemplateRespObj;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatAccessToken;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatMessageTemplate;
 import com.github.x19990416.macrossx.spring.wechat.server.http.WechatHttpClient;
@@ -43,18 +43,17 @@ public class WechatMessageHelper implements IWechatMessageHelper {
 	private IWechatHelper wechatHelper;
 
 	@Override
-	public Optional<WecahtMessageTemplateRespObj> sendTemplate(WechatMessageTemplate template) {
+	public Optional<WechatMessageTemplateRespObj> sendTemplate(WechatMessageTemplate template) {
 		try {
 			Optional<WechatAccessToken> token = wechatHelper.getAccessToken();
 			if (token.isPresent()) {
 				WechatAccessToken accessToken = token.get();
 				HttpPost httpPost = new HttpPost();
-				System.out.println(new Gson().toJson(template));
 				httpPost.setEntity(new StringEntity(new Gson().toJson(template), "utf-8"));
 				httpPost.setURI(new URI(MessageFormat.format(WechatConstants.MESSAGE_TEMPLATE_SEND_URL,
 						accessToken.getAccess_token())));
 				return new WechatHttpClient().send(httpPost,
-						WecahtMessageTemplateRespObj.class);
+						WechatMessageTemplateRespObj.class);
 			}
 		} catch (URISyntaxException e) {
 			log.info(e.getMessage());

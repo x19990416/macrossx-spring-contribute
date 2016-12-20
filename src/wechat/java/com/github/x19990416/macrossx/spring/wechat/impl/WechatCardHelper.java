@@ -39,6 +39,7 @@ public class WechatCardHelper implements IWechatCardHelper {
 		HttpPost httpPost = new HttpPost();
 		try {
 			httpPost.setURI(new URI(MessageFormat.format(WechatConstants.UPLOAD_LOGO, accessToken.getAccess_token())));
+			
 			httpPost.setEntity(MultipartEntityBuilder.create().addBinaryBody("buffer", inputStream).build());
 			return new WechatHttpClient().send(httpPost, WechatLogo.class);
 		} catch (URISyntaxException e) {
@@ -52,7 +53,7 @@ public class WechatCardHelper implements IWechatCardHelper {
 		WechatAccessToken accessToken = wechatHelper.getAccessToken().get();
 		HttpPost httpPost = new HttpPost();
 		try {
-			httpPost.setURI(new URI(MessageFormat.format(WechatConstants.UPLOAD_LOGO, accessToken.getAccess_token())));
+			httpPost.setURI(new URI(MessageFormat.format(WechatConstants.CARD_CREATE, accessToken.getAccess_token())));
 			httpPost.setEntity(new StringEntity(new Gson().toJson(wechatCard), "utf-8"));
 			return new WechatHttpClient().send(httpPost, WechatResponseObj.class);
 		} catch (URISyntaxException e) {
@@ -67,7 +68,7 @@ public class WechatCardHelper implements IWechatCardHelper {
 		WechatAccessToken accessToken = wechatHelper.getAccessToken().get();
 		HttpPost httpPost = new HttpPost();
 		try {
-			httpPost.setURI(new URI(MessageFormat.format(WechatConstants.UPLOAD_LOGO, accessToken.getAccess_token())));
+			httpPost.setURI(new URI(MessageFormat.format(WechatConstants.CARD_ACTIVATE, accessToken.getAccess_token())));
 			httpPost.setEntity(new StringEntity(new Gson().toJson(activation), "utf-8"));
 			return new WechatHttpClient().send(httpPost, WechatResponseObj.class);
 		} catch (URISyntaxException e) {
@@ -81,7 +82,7 @@ public class WechatCardHelper implements IWechatCardHelper {
 		WechatAccessToken accessToken = wechatHelper.getAccessToken().get();
 		HttpPost httpPost = new HttpPost();
 		try {
-			httpPost.setURI(new URI(MessageFormat.format(WechatConstants.UPLOAD_LOGO, accessToken.getAccess_token())));
+			httpPost.setURI(new URI(MessageFormat.format(WechatConstants.CARD_UPDATE_USER, accessToken.getAccess_token())));
 			httpPost.setEntity(new StringEntity(new Gson().toJson(update), "utf-8"));
 			return new WechatHttpClient().send(httpPost, WechatCardUpdateRespObj.class);
 		} catch (URISyntaxException e) {
