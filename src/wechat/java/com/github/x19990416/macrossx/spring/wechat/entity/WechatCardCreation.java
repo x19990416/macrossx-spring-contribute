@@ -1,5 +1,7 @@
 package com.github.x19990416.macrossx.spring.wechat.entity;
 
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,6 +25,12 @@ public class WechatCardCreation extends WechatRequestObj {
 	public static class GeneralCard {
 		private SUB_CARD_TYPE sub_card_type;
 		private BaseInfo base_info;
+		private boolean supply_bonus;
+		private boolean supply_balance;
+		private String activate_url;
+		private CustomField custom_field1;
+		private CustomField custom_field2;
+		private CustomField custom_field3;
 	}
 
 	@Data
@@ -39,13 +47,16 @@ public class WechatCardCreation extends WechatRequestObj {
 		private String description;
 		private DateInfo date_info;
 		private Sku sku;
-		private MData m_data;
-	}
-	
-	@Data
-	@Builder
-	public static class MData{
-		private String has_supply_bonus	;
+		private Long get_limit;
+		private boolean use_custom_code;
+		private boolean can_give_friend;
+		private boolean can_share;
+		private List<Long> location_id_list;
+		private boolean use_all_locations;
+		private boolean bind_openid;
+		private String custom_url_name;
+		private String custom_url;
+		private boolean need_push_on_view;
 	}
 
 	@Data
