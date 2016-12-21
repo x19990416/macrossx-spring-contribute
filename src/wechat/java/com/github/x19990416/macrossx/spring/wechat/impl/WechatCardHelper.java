@@ -17,9 +17,10 @@ import com.github.x19990416.macrossx.spring.wechat.IWechatHelper;
 import com.github.x19990416.macrossx.spring.wechat.WechatConstants;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatAccessToken;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardActivation;
-import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardCreation;
-import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardUpdateReqObj;
-import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardUpdateRespObj;
+import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardCreateReqObj;
+import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardCreateRespObj;
+import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardUserUpdateReqObj;
+import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardUserUpdateRespObj;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatLogo;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatResponseObj;
 import com.github.x19990416.macrossx.spring.wechat.server.http.WechatHttpClient;
@@ -49,13 +50,29 @@ public class WechatCardHelper implements IWechatCardHelper {
 		}
 	}
 
-	public Optional<WechatResponseObj> create(WechatCardCreation wechatCard) {
+	public Optional<WechatCardCreateRespObj> create(WechatCardCreateReqObj wechatCard) {
 		WechatAccessToken accessToken = wechatHelper.getAccessToken().get();
 		HttpPost httpPost = new HttpPost();
 		try {
 			httpPost.setURI(new URI(MessageFormat.format(WechatConstants.CARD_CREATE, accessToken.getAccess_token())));
 			httpPost.setEntity(new StringEntity(new Gson().toJson(wechatCard), "utf-8"));
-			return new WechatHttpClient().send(httpPost, WechatResponseObj.class);
+			return new WechatHttpClient().send(httpPost, WechatCardCreateRespObj.class);
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			log.error("{0}", e);
+			return Optional.empty();
+		}
+
+	}
+	
+
+	public Optional<WechatCardCreateRespObj> update(WechatCardCreateReqObj wechatCard) {
+		WechatAccessToken accessToken = wechatHelper.getAccessToken().get();
+		HttpPost httpPost = new HttpPost();
+		try {
+			httpPost.setURI(new URI(MessageFormat.format(WechatConstants.CARD_UPDATE, accessToken.getAccess_token())));
+			httpPost.setEntity(new StringEntity(new Gson().toJson(wechatCard), "utf-8"));
+			return new WechatHttpClient().send(httpPost, WechatCardCreateRespObj.class);
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			log.error("{0}", e);
@@ -78,13 +95,13 @@ public class WechatCardHelper implements IWechatCardHelper {
 		}
 	}
 	
-	public Optional<WechatCardUpdateRespObj> update(WechatCardUpdateReqObj update) {
+	public Optional<WechatCardUserUpdateRespObj> userUpdate(WechatCardUserUpdateReqObj update) {
 		WechatAccessToken accessToken = wechatHelper.getAccessToken().get();
 		HttpPost httpPost = new HttpPost();
 		try {
 			httpPost.setURI(new URI(MessageFormat.format(WechatConstants.CARD_UPDATE_USER, accessToken.getAccess_token())));
 			httpPost.setEntity(new StringEntity(new Gson().toJson(update), "utf-8"));
-			return new WechatHttpClient().send(httpPost, WechatCardUpdateRespObj.class);
+			return new WechatHttpClient().send(httpPost, WechatCardUserUpdateRespObj.class);
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			log.error("{0}", e);

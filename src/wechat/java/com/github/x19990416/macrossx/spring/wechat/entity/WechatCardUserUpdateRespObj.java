@@ -7,7 +7,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-public class WechatCardUpdateRespObj extends  WechatResponseObj{
+public class WechatCardUserUpdateRespObj extends  WechatResponseObj{
 	private Long result_bonus;
 	private Long result_balance;
 	private String openId;

@@ -10,12 +10,13 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-public class WechatCardCreation extends WechatRequestObj {
+public class WechatCardCreateReqObj extends WechatRequestObj {
 	private Card card;
-
+	private String card_id;
 	@Data
 	@Builder
 	public static class Card {
+
 		private String card_type;
 		private GeneralCard general_card;
 	}
