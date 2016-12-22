@@ -28,6 +28,7 @@ public interface WechatConstants {
 	public static final String CARD_CREATE="https://api.weixin.qq.com/card/create?access_token={0}";
 	public static final String CARD_UPDATE="https://api.weixin.qq.com/card/update?access_token={0}";
 	public static final String CARD_ACTIVATE="https://api.weixin.qq.com/card/generalcard/activate?access_token={0}";
+	public static final String CARD_BATCHGET="https://api.weixin.qq.com/card/batchget?access_token={0}";
 	public static final String CARD_UPDATE_USER="https://api.weixin.qq.com/card/generalcard/updateuser?access_token={0}";
 	public static final String CARD_RELEASE_CREATE="https://api.weixin.qq.com/card/qrcode/create?access_token={0}";
 	public static final String STORE_POI_LIST="https://api.weixin.qq.com/cgi-bin/poi/getpoilist?access_token={0}";

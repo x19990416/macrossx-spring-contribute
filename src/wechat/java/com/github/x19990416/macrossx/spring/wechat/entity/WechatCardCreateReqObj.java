@@ -42,7 +42,7 @@ public class WechatCardCreateReqObj extends WechatRequestObj {
 		private String brand_name;
 		private CODE_TYPE code_type;
 		private String title;
-		private String color;
+		private COLOR color;
 		private String notice;
 		private String service_phone;
 		private String description;
@@ -57,13 +57,22 @@ public class WechatCardCreateReqObj extends WechatRequestObj {
 		private boolean bind_openid;
 		private String custom_url_name;
 		private String custom_url;
+		private String custom_url_sub_title;
 		private boolean need_push_on_view;
+		private String promotion_url_name;
+		private String promotion_url;
+		private String promotion_url_sub_title;
+
 	}
 
+
+	
 	@Data
 	@Builder
 	public static class CustomField {
-		private NAME_TYPE name_type;
+		private FIELD_NAME_TYPE_LEVEL name_type;
+		private String name;
+		private String url;
 
 	}
 
@@ -89,14 +98,17 @@ public class WechatCardCreateReqObj extends WechatRequestObj {
 	}
 
 	public static enum CODE_TYPE {
-		CODE_TYPE_TEXT, CODE_TYPE_BARCODE, CODE_TYPE_QRCODE, CODE_TYPE_ONLY_QRCODE, CODE_TYPE_ONLY_BARCODE
+		CODE_TYPE_TEXT, CODE_TYPE_BARCODE, CODE_TYPE_QRCODE, CODE_TYPE_ONLY_QRCODE, CODE_TYPE_ONLY_BARCODE,CODE_TYPE_NONE
 	}
 
 	public static enum DATE_INFO_TYPE {
 		DATE_TYPE_FIX_TERM_RANGE, DATE_TYPE_FIX_TERM, DATE_TYPE_PERMANENT
 	}
 
-	public static enum NAME_TYPE {
+	public static enum FIELD_NAME_TYPE_LEVEL {
 		FIELD_NAME_TYPE_LEVEL, FIELD_NAME_TYPE_COUPON, FIELD_NAME_TYPE_STAMP, FIELD_NAME_TYPE_DISCOUNT, FIELD_NAME_TYPE_ACHIEVEMEN, FIELD_NAME_TYPE_MILEAGE, FIELD_NAME_TYPE_SET_POINTS, FIELD_NAME_TYPE_TIMS
+	}
+	public static enum COLOR{
+		Color010,Color020,Color030,Color040,Color050,Color060,Color070,Color080,Color090,Color100,
 	}
 }

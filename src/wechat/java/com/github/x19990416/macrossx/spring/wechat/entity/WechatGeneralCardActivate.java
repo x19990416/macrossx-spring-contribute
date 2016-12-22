@@ -1,5 +1,6 @@
 package com.github.x19990416.macrossx.spring.wechat.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -7,7 +8,8 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-public class WechatCardActivation extends WechatRequestObj {
+@Builder
+public class WechatGeneralCardActivate extends WechatRequestObj {
 	private Long init_bonus;
 	private Long init_balance;
 	private String card_number;
