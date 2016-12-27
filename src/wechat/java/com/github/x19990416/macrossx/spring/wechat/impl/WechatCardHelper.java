@@ -1,11 +1,10 @@
 package com.github.x19990416.macrossx.spring.wechat.impl;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
+import java.util.Map;
 import java.util.Optional;
 
 import org.apache.http.client.methods.HttpPost;
@@ -22,6 +21,7 @@ import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardBatchgetReqO
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardBatchgetRespObj;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardCreateReqObj;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardCreateRespObj;
+import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardDecryptRespObj;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardUpdateReqObj;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardUserUpdateReqObj;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardUserUpdateRespObj;
@@ -29,6 +29,7 @@ import com.github.x19990416.macrossx.spring.wechat.entity.WechatGeneralCardActiv
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatLogo;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatResponseObj;
 import com.github.x19990416.macrossx.spring.wechat.server.http.WechatHttpClient;
+import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +49,21 @@ public class WechatCardHelper implements IWechatCardHelper {
 			
 			httpPost.setEntity(MultipartEntityBuilder.create().addBinaryBody("buffer",file).build());
 			return new WechatHttpClient().send(httpPost, WechatLogo.class);
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			log.error("{0}", e);
+			return Optional.empty();
+		}
+	}
+	
+	public Optional<WechatCardDecryptRespObj> decrypt(String encrypt_code) {
+		WechatAccessToken accessToken = wechatHelper.getAccessToken().get();
+		HttpPost httpPost = new HttpPost();
+		try {
+			httpPost.setURI(new URI(MessageFormat.format(WechatConstants.CARD_CODE_DECRYPT, accessToken.getAccess_token())));
+			httpPost.setEntity(new StringEntity("{\"encrypt_code\":\""+encrypt_code+"\"}","utf-8"));
+		//	httpPost.setEntity(MultipartEntityBuilder.create().addBinaryBody("buffer",file).build());
+			return new WechatHttpClient().send(httpPost, WechatCardDecryptRespObj.class);
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			log.error("{0}", e);
@@ -76,7 +92,6 @@ public class WechatCardHelper implements IWechatCardHelper {
 		HttpPost httpPost = new HttpPost();
 		try {
 			httpPost.setURI(new URI(MessageFormat.format(WechatConstants.CARD_UPDATE, accessToken.getAccess_token())));
-			
 			
 			String sx = new Gson().toJson(wechatCard);
 			System.out.println(sx);
@@ -132,6 +147,24 @@ public class WechatCardHelper implements IWechatCardHelper {
 			log.error("{0}", e);
 			return Optional.empty();
 		}
+	}
+	
+	public Optional<WechatResponseObj> delete(String cardid){
+		WechatAccessToken accessToken = wechatHelper.getAccessToken().get();
+		HttpPost httpPost = new HttpPost();
+		try {
+			httpPost.setURI(new URI(MessageFormat.format(WechatConstants.CARD_DELETE, accessToken.getAccess_token())));
+			Map<String,String> map = Maps.newHashMap();
+			map.put("card_id", cardid);
+			httpPost.setEntity(new StringEntity(new Gson().toJson(map), "utf-8"));
+			System.out.println(new Gson().toJson(map));
+			return new WechatHttpClient().send(httpPost, WechatResponseObj.class);
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			log.error("{0}", e);
+			return Optional.empty();
+		}
+		
 	}
 
 }

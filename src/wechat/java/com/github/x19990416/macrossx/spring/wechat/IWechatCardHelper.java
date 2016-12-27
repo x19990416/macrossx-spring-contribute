@@ -7,6 +7,7 @@ import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardBatchgetReqO
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardBatchgetRespObj;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardCreateReqObj;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardCreateRespObj;
+import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardDecryptRespObj;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardUpdateReqObj;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardUserUpdateReqObj;
 import com.github.x19990416.macrossx.spring.wechat.entity.WechatCardUserUpdateRespObj;
@@ -25,5 +26,9 @@ public interface IWechatCardHelper {
 	
 	public Optional<WechatCardCreateRespObj> update(WechatCardUpdateReqObj wechatCard);
 	
+	public Optional<WechatResponseObj> delete(String request);
+	
 	public Optional<WechatCardBatchgetRespObj> batchget(WechatCardBatchgetReqObj request);
+	
+	public Optional<WechatCardDecryptRespObj> decrypt(String encrypt_code);
 }
