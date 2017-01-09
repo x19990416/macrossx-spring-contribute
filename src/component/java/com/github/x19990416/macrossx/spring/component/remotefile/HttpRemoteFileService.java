@@ -14,6 +14,7 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClients;
@@ -48,8 +49,9 @@ public class HttpRemoteFileService implements IRemoteFileService {
 		HttpRequestBase request = createPutReq(in, subUrl, name);
 		int statusCode = -1;
 
+		HttpResponse httpResponse = null;
 		try {
-			HttpResponse httpResponse = httpClient.execute(request);
+			httpResponse = httpClient.execute(request);
 			statusCode = httpResponse.getStatusLine().getStatusCode();
 		} catch (IOException e) {
 			request.abort();
@@ -57,6 +59,7 @@ public class HttpRemoteFileService implements IRemoteFileService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
+			HttpClientUtils.closeQuietly(httpResponse);
 		}
 
 		return isSuccess(statusCode);
@@ -67,8 +70,9 @@ public class HttpRemoteFileService implements IRemoteFileService {
 		HttpRequestBase request = createGetReq(subUrl, name);
 		byte[] fileData = null;
 
+		HttpResponse httpResponse = null;
 		try {
-			HttpResponse httpResponse = httpClient.execute(request);
+			httpResponse = httpClient.execute(request);
 			if (isSuccess(httpResponse.getStatusLine().getStatusCode())) {
 				fileData = EntityUtils.toByteArray(httpResponse.getEntity());
 			}
@@ -78,6 +82,7 @@ public class HttpRemoteFileService implements IRemoteFileService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
+			HttpClientUtils.closeQuietly(httpResponse);
 		}
 
 		return fileData;
@@ -88,8 +93,9 @@ public class HttpRemoteFileService implements IRemoteFileService {
 		HttpRequestBase request = createRemoveReq(subUrl, name);
 		int statusCode = -1;
 
+		HttpResponse httpResponse = null;
 		try {
-			HttpResponse httpResponse = httpClient.execute(request);
+			httpResponse = httpClient.execute(request);
 			statusCode = httpResponse.getStatusLine().getStatusCode();
 		} catch (IOException e) {
 			request.abort();
@@ -97,6 +103,7 @@ public class HttpRemoteFileService implements IRemoteFileService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
+			HttpClientUtils.closeQuietly(httpResponse);
 		}
 
 		return isSuccess(statusCode);
