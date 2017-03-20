@@ -21,19 +21,21 @@ import java.util.Optional;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
-@Log
+@Slf4j
 public class WechatHttpClient {
 
 	public <T> Optional<T> send( final HttpUriRequest request, Class<T> clazz) {
 		String result = this.send(request);
+		System.err.println(result);
 		if (result.isEmpty()) {
 			return Optional.empty();
 		} else {
@@ -43,11 +45,16 @@ public class WechatHttpClient {
 
 	public String send(final HttpUriRequest request) {
 		String result = "";
+		
 		try {
 			CloseableHttpResponse response = HttpClients.createDefault().execute(request);
 			int statusCode = response.getStatusLine().getStatusCode();
 			if (HttpStatus.SC_OK != statusCode) {
-				log.info("Failed to get!");
+				if(request instanceof HttpPost){
+					log.info("Failed to get! uri[{}] entity[{}]",request.getURI(),((HttpPost) request).getEntity());
+				}else{
+					log.info("Failed to get! uri[{}] entity[{}]",request.getURI());
+				}
 				return "";
 			}
 			HttpEntity entity = response.getEntity();
@@ -57,5 +64,4 @@ public class WechatHttpClient {
 		}
 		return result;
 	}
-
 }
