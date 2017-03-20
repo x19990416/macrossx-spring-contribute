@@ -35,7 +35,6 @@ public class WechatHttpClient {
 
 	public <T> Optional<T> send( final HttpUriRequest request, Class<T> clazz) {
 		String result = this.send(request);
-		System.err.println(result);
 		if (result.isEmpty()) {
 			return Optional.empty();
 		} else {
