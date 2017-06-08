@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -25,12 +26,16 @@ public class JDBCHelper {
 	private static final String lastId_mysql = "select LAST_INSERT_ID()";
 
 	public static <T> T get(JdbcTemplate jdbcTemplate, String sql, Class<T> requiredType, Object... args) {
-		RowMapper<T> rm = BeanPropertyRowMapper.newInstance(requiredType);
-		if (null == args || args.length == 0) {
-			return jdbcTemplate.queryForObject(sql, rm);
+		try {
+			RowMapper<T> rm = BeanPropertyRowMapper.newInstance(requiredType);
+			if (null == args || args.length == 0) {
+				return jdbcTemplate.queryForObject(sql, rm);
+			}
+			return jdbcTemplate.queryForObject(sql, rm, args);
+		} catch (IncorrectResultSizeDataAccessException e) {
+			log.info("{}", e);
+			return null;
 		}
-		return jdbcTemplate.queryForObject(sql, rm, args);
-
 	}
 
 	public static int update(JdbcTemplate jdbcTemplate, String sql, Object... args) {
