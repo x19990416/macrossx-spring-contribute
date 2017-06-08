@@ -1,11 +1,13 @@
 package com.github.x19990416.macrossx.spring.jdbc;
 
+import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -14,8 +16,14 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
+import com.google.common.collect.Maps;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class JDBCHelper {
 	private static final String lastId_mysql = "select LAST_INSERT_ID()";
+
 	public static <T> T get(JdbcTemplate jdbcTemplate, String sql, Class<T> requiredType, Object... args) {
 		RowMapper<T> rm = BeanPropertyRowMapper.newInstance(requiredType);
 		if (null == args || args.length == 0) {
@@ -103,7 +111,7 @@ public class JDBCHelper {
 
 	public static int updateByKey(JdbcTemplate jdbcTemplate, String tableName, String keyName,
 			Map<String, Object> params) {
-		if (params == null || params.isEmpty())
+		if (params == null || params.isEmpty() || StringUtils.isEmpty(keyName))
 			return -1;
 		Object[] objects = new Object[params.values().size()];
 		StringBuilder sql = new StringBuilder("update " + tableName);
@@ -118,8 +126,41 @@ public class JDBCHelper {
 		for (Object o : params.values()) {
 			objects[i++] = o;
 		}
-		objects[i] = id;	
+		objects[i] = id;
 		return update(jdbcTemplate, sql.toString(), objects);
+	}
+
+	public static int updateByKey(JdbcTemplate jdbcTemplate, Object o) {
+		Map<String, Object> params = Maps.newHashMap();
+		Table table = o.getClass().getDeclaredAnnotation(Table.class);
+		if (table == null) {
+			log.error("no declare annotation of Table in  {}", o.getClass());
+			return -1;
+		}
+		String tableName = table.value();
+		if (StringUtils.isEmpty(tableName)) {
+			log.error("no value of Table in {}" + o.getClass());
+			return -1;
+		}
+		String keyName = null;
+		for (Field field : o.getClass().getDeclaredFields()) {
+			Column column = field.getAnnotation(Column.class);
+			if (column != null && StringUtils.isEmpty(column.value()))
+				continue;
+			field.setAccessible(true);
+			try {
+				Object value = field.get(o);
+				if (value != null)
+					params.put(column.value(), value);
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				log.error("{}", e);
+			}
+			if (field.getAnnotation(Key.class) != null) {
+				keyName = column.value();
+			}
+		}
+		return updateByKey(jdbcTemplate, tableName, keyName, params);
 	}
 
 }
